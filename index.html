@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title> Chitthi 💐</title>
+<style>
+:root{
+  --red:#c8102e; --red-dark:#8f0a20; --bg:#fff0f2; --paper:#fffdfb; --ink:#7a0b1f; --line:#f3c3cb;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#3a0710; } }
+:root[data-theme="dark"]{ --bg:#3a0710; }
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:var(--bg);font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;padding:24px 14px 40px;overflow-x:hidden}
+h1{font-family:"Brush Script MT","Segoe Script",cursive;font-size:clamp(30px,8vw,46px);color:var(--red);margin:6px 0 4px;text-align:center}
+.sub{color:var(--red-dark);margin:0 0 18px;text-align:center;font-size:15px}
+.pad{width:100%;max-width:480px;background:var(--paper);border-radius:6px 6px 14px 14px;position:relative;
+  box-shadow:0 12px 30px rgba(143,10,32,.35);border-top:26px solid var(--red);padding:0 16px 44px 54px;
+  background-image:repeating-linear-gradient(transparent 0,transparent 43px,var(--line) 43px,var(--line) 44px);
+  background-color:var(--paper)}
+.pad::before{content:"";position:absolute;left:38px;top:0;bottom:0;width:2px;background:var(--red);opacity:.55}
+.pad::after{content:"★";position:absolute;top:-24px;right:14px;color:#fff;font-size:16px;line-height:26px}
+.holes{position:absolute;left:10px;top:12px;bottom:12px;display:flex;flex-direction:column;justify-content:space-around}
+.holes i{width:14px;height:14px;border-radius:50%;background:var(--bg);box-shadow:inset 0 1px 3px rgba(0,0,0,.4)}
+.date{font-size:13px;color:var(--red);text-align:right;line-height:44px;margin-bottom:0}
+.hello{font-family:"Brush Script MT","Segoe Script",cursive;font-size:24px;line-height:44px;color:var(--red-dark)}
+.l{line-height:44px;min-height:44px;margin:0;font-size:19px;font-family:"Segoe Print","Comic Sans MS","Bradley Hand",cursive;color:var(--red-dark);
+  opacity:0;transform:translateY(8px);transition:.5s;display:none}
+.l.show{display:block;opacity:1;transform:none}
+.l b{color:var(--red)}
+.cursor::after{content:"|";color:var(--red);animation:b .7s infinite}
+@keyframes b{50%{opacity:0}}
+.bar{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:10px}
+button{background:var(--red);color:#fff;border:0;border-radius:30px;padding:13px 26px;font-size:17px;font-weight:600;cursor:pointer;
+  box-shadow:0 6px 16px rgba(200,16,46,.5);transition:.2s}
+button:active{transform:scale(.95)}
+button.ghost{background:#fff;color:var(--red);border:2px solid var(--red);box-shadow:none}
+.count{color:#fff;font-size:13px;opacity:.9;background:var(--red);padding:3px 12px;border-radius:20px}
+.sign{margin-top:6px;text-align:right;font-family:"Brush Script MT","Segoe Script",cursive;font-size:22px;color:var(--red);line-height:44px;display:none}
+.sign.show{display:block}
+.heart{position:fixed;bottom:-30px;pointer-events:none;animation:up 4s linear forwards;z-index:9}
+@keyframes up{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+</style>
+</head>
+<body>
+<h1>Geetu Ke Naam Chitthi 💐</h1>
+<p class="sub">Ek ek line khol ke dekho 😄🌹</p>
+
+<div class="pad">
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="date" id="date"></div>
+  <div class="hello">Hello Geetu ji, 😄</div>
+  <div class="l" id="l0"></div>
+  <div class="l" id="l1"></div>
+  <div class="l" id="l2"></div>
+  <div class="l" id="l3"></div>
+  <div class="l" id="l4"></div>
+  <div class="l" id="l5"></div>
+  <div class="l" id="l6"></div>
+  <div class="sign" id="sign">Tumhara dost 😎🤝</div>
+</div>
+
+<div class="bar">
+  <span class="count" id="count">0 / 7 lines khuli</span>
+  <button id="btn">Pehli line kholo 🌹</button>
+  <button class="ghost" id="reset" style="display:none">Dobara padho 🔄</button>
+</div>
+
+<script>
+var lines=[
+ "🔵 Neela Phool 🌸 lal Phool 🌹 geetu ji beautiful ✨😄",
+ "🥟 Ek khachori ☕ do chai geetu is cutie pie 😁🍰",
+ "🍃 Neem ka patta kadwa hai 😝 mujhe geetu ki parwah hai 🤝",
+ "😎 Dikha karo bhyii dikha kro 🔥 limit mai sudar dikha karo 😜🌟",
+ "☕ Chai mein cheeni kam hai 😅 par Geetu ji ki smile mein dum hai 😁✨",
+ "🌶️ Gol gappe teekhe hain 🔥 par Geetu ji ke jokes bhi kam nahi hain 😂",
+ "🍯 Gulab jamun meetha hai 😋 par Geetu ji se dosti sabse achhi hai 🤝🌹"
+];
+var i=0,busy=false;
+var btn=document.getElementById('btn'),reset=document.getElementById('reset'),count=document.getElementById('count');
+document.getElementById('date').textContent=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})+" 🌸";
+
+function hearts(){
+  for(var k=0;k<14;k++){
+    var h=document.createElement('div');h.className='heart';
+    h.textContent=['🌹','🌸','✨','🌼'][k%4];
+    h.style.left=Math.random()*95+'vw';h.style.fontSize=(16+Math.random()*20)+'px';
+    h.style.animationDelay=(Math.random()*1.2)+'s';
+    document.body.appendChild(h);
+    setTimeout(function(x){x.remove()},5500,h);
+  }
+}
+function type(el,text,done){
+  var n=0;el.classList.add('show','cursor');el.textContent='';
+  var t=setInterval(function(){
+    el.textContent=text.slice(0,++n);
+    if(n>=text.length){clearInterval(t);el.classList.remove('cursor');done();}
+  },45);
+}
+btn.onclick=function(){
+  if(busy||i>=lines.length)return;
+  busy=true;btn.disabled=true;
+  type(document.getElementById('l'+i),lines[i],function(){
+    i++;hearts();busy=false;btn.disabled=false;
+    count.textContent=i+' / 7 lines khuli';
+    if(i<lines.length){btn.textContent='Agli line kholo 🌹';}
+    else{btn.style.display='none';reset.style.display='inline-block';
+      document.getElementById('sign').classList.add('show');}
+  });
+};
+reset.onclick=function(){
+  for(var k=0;k<7;k++){var e=document.getElementById('l'+k);e.classList.remove('show');e.textContent='';}
+  document.getElementById('sign').classList.remove('show');
+  i=0;count.textContent='0 / 7 lines khuli';btn.textContent='Pehli line kholo 🌹';
+  btn.style.display='inline-block';reset.style.display='none';
+};
+</script>
+</body>
+</html>
